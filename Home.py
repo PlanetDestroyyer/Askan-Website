@@ -1,10 +1,12 @@
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 import base64
+import Profile
 st.set_page_config(page_title="ASKAN",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)
 want_to_contribute = st.button("Profile")
 if want_to_contribute:
     switch_page('Profile')
+    
 def main():
     st.header("ASKAN")
     st.write("#")
