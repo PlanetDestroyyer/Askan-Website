@@ -1,4 +1,5 @@
-Name,Password,Region,Area Working,Average Temp Min,Average Temp Max,Crop Name,Crop Breed,Average Height,Seed Source,Email,Mobile Number
-Pranav,Pranav@369,India,400,25,35,Capsicum,Gold A3,8cm,Home made,wrieddude@gmail.com,918459582668    
-kapish desai,1234
-Pranav,Pranav@364
+Name,Password,Region,Area Working,Gender,Qualification,Purpose,Message,Mobile Number,Email ,,,
+Pranav,Pranav@369,India,400    ,25    ,35    ,Capsicum,Gold A3,8cm,Home made,,,
+kapish desai,1234    ,,,,,,,,,,,
+Pranav,Pranav@364,,,,,,,,,,,
+Pranav,Pranab3oiu,India,200    ,Male,Educated (10th pass),Domestic,Yes,8459582668    ,,,,
