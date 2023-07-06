@@ -1,6 +1,12 @@
 import streamlit as st
 import base64
-st.set_page_config(page_title="Activity",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)
+
+    
+def main():
+    st.header("ASKAN")
+    st.write("#")
+    st.subheader("A GOOD AGRICULTURE FOR BETTER TOMMOROW........!")
+
 
 def hideAll():
     hide = """
@@ -191,3 +197,4 @@ style()
 hideAll()
 if __name__ == "__main__":
     run_app()
+
