@@ -1,13 +1,41 @@
 import streamlit as st
 import pandas as pd
+import sqlite3
+st.set_page_config(page_title="Activity",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)
+# Establish a connection to the SQLite database
+conn = sqlite3.connect('crop_data.db')
 
-def append(appendind_data):
-    df = pd.DataFrame(appendind_data)
-    df.to_csv('new1.csv', mode='a', index=False, header=False)
+# Create a table to store the crop details
+conn.execute('''
+    CREATE TABLE IF NOT EXISTS crops (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        region TEXT,
+        area_working REAL,
+        avg_temp_min REAL,
+        avg_temp_max REAL,
+        crop_name TEXT,
+        crop_breed TEXT,
+        avg_height REAL,
+        seed_source TEXT
+    )
+''')
+
+def insert_crop_details(username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source):
+    conn.execute('''
+        INSERT INTO crops (username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source))
+    conn.commit()
 
 def main():
     st.title("Crop Entry.py")
     st.subheader("Crop Details")
+    
+    # Retrieve the username from the session state
+    session_state = get_session_state()
+    username = session_state['username']
+    
     region = st.text_input("Enter your region (For India Only):")
     area_working = st.number_input("Area of working (in square meters):", min_value=0.0)
     avg_temp_min = st.number_input("Average Temperature - Minimum (°C):", min_value=-1.0, max_value=100.0, value=0.0)
@@ -18,35 +46,9 @@ def main():
     seed_source = st.selectbox("Select Seed Source:", ("Home Made", "Purchased from Provider"))
 
     if st.button("Save"):
-        # Create a dictionary to store the crop details
-        # crop_details = {
-        #     df['Region']: region,
-        #     df['Area working']: area_working,
-        #     df['Avergae Temp Min']: avg_temp_min,
-        #     df: avg_temp_max,
-        #     : crop_name,
-        #     : crop_breed,
-        #     : avg_height,
-        #     df['seed source']: seed_source
-        
-        # Save the crop details in a CSV file
-        append(crop_details)
-
+        insert_crop_details(username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source)
         st.success("Crop details saved successfully!")
 
-    # Check if the CSV file exists
-
-    # If the file exists, load the existing data and append the new crop details
-    # if file_exists is not None:
-    #     with open(csv_file, "a") as f:
-    #         writer = csv.DictWriter(f, fieldnames=crop_details.keys())
-    #         writer.writerow(crop_details)
-    # else:
-    #     # If the file doesn't exist, create a new file and write the crop details
-    #     with open(csv_file, "w") as f:
-    #         writer = csv.DictWriter(f, fieldnames=crop_details.keys())
-    #         writer.writeheader()
-    #         writer.writerow(crop_details)
 def hideAll():
     hide = """
         <style>
@@ -55,13 +57,13 @@ def hideAll():
         header {visibility: hidden;}
         </style>
         """   
-    st.markdown(hide,unsafe_allow_html=True)
-hideAll()
+    st.markdown(hide, unsafe_allow_html=True)
 
-def style():
-    with open('style.css') as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+def get_session_state():
+    if 'session_state' not in st.session_state:
+        st.session_state['session_state'] = {}
+    return st.session_state['session_state']
 
-
-style()
-main()
+if __name__ == "__main__":
+    hideAll()
+    main()

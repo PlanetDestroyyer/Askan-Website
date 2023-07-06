@@ -43,7 +43,7 @@ def style():
 # Read and display temperature data
 def temp():
     try:
-        ser = serial.Serial('COM5', 9600) 
+        ser = serial.Serial('COM3', 9600) 
         while True:
             data = ser.readline().decode('utf-8').rstrip()
             if data:
@@ -56,8 +56,36 @@ def temp():
                     time.sleep(1)
     except:
         st.write("The Sensor is not Conneted or U have open the same tab agian so close it and try again.")
-
+def Water_level():  
+    # try:
+    ser = serial.Serial('COM3', 9600)  # Replace '/dev/ttyUSB0' with your Arduino's serial port
+    # Thresholds
+    lowerThreshold = 310
+    upperThreshold = 510
+    # Function to print water level message
+    def print_water_level_message(level):
+        if level <= lowerThreshold:
+            st.write("Water Level: need more water")
+        elif lowerThreshold < level <= upperThreshold:
+            st.write("Water Level: need water")
+        else:
+            st.write("Water Level: full")
+    # Loop
+    while True:
+        # Read water level from the Arduino
+        line = ser.readline().decode().rstrip()
+        try:
+            waterLevel = int(line)  # Parse the received line as an integer
+            print_water_level_message(waterLevel)
+        except ValueError:
+            st.write(line) 
+        time.sleep(1)
+    # except:
+    #     st.write("The Sensor is not Conneted or U have open the same tab agian so close it and try again.")
+   
 # Close the serial connection
-temp()
 style()
 main()
+
+temp()
+Water_level()
