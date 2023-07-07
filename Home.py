@@ -4,10 +4,10 @@ import base64
 
 st.set_page_config(page_title="Home",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)  
 
-def title():
-    st.header("ASKAN")
-    st.write("#")
-    st.subheader("A GOOD AGRICULTURE FOR BETTER TOMMOROW........!")
+# def title():
+#     st.header("ASKAN")
+#     st.write("#")
+#     st.subheader("A GOOD AGRICULTURE FOR BETTER TOMMOROW........!")
 
 def add_meta_tag():
     meta_tag = """
@@ -208,7 +208,7 @@ def style():
 
 def main():
     style()
-    title()
+    # title()
     add_canonical_tag()
     add_meta_tag()
     hideAll()
