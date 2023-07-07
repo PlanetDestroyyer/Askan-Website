@@ -1,5 +1,5 @@
 import streamlit as st
-# import serial
+import base64
 import time
 
 from streamlit_option_menu import option_menu
@@ -48,9 +48,9 @@ def remove_underline():
 hideAll()
 def main():
     st.title("Welcome to the Equip page")
-# def style():
-#     with open('style.css') as f:
-#         st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
+def style():
+    with open('style.css') as f:
+        st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
 
 # # Read and display temperature data
 # def temp():
@@ -68,40 +68,29 @@ def main():
 #                     time.sleep(1)
 #     except:
 #         st.write("The Sensor is not Conneted or U have open the same tab agian so close it and try again.")
-# def Water_level():  
-#     # try:
-# <<<<<<< HEAD
-#     ser = serial.Serial('COM3', 9600)  # Replace '/dev/ttyUSB0' with your Arduino's serial port
-# =======
-#     ser = serial.Serial('COM7', 9600)  # Replace '/dev/ttyUSB0' with your Arduino's serial port
-# >>>>>>> d0c6f43d9069d66bc599f501b420ab81c95f5f0d
-#     # Thresholds
-#     lowerThreshold = 310
-#     upperThreshold = 510
-#     # Function to print water level message
-#     def print_water_level_message(level):
-#         if level <= lowerThreshold:
-#             st.write("Water Level: need more water")
-#         elif lowerThreshold < level <= upperThreshold:
-#             st.write("Water Level: need water")
-#         else:
-#             st.write("Water Level: full")
-#     # Loop
-#     while True:
-#         # Read water level from the Arduino
-#         line = ser.readline().decode().rstrip()
-#         try:
-#             waterLevel = int(line)  # Parse the received line as an integer
-#             print_water_level_message(waterLevel)
-#         except ValueError:
-#             st.write(line) 
-#         time.sleep(1)
-#     # except:
-#     #     st.write("The Sensor is not Conneted or U have open the same tab agian so close it and try again.")
-   
-# # Close the serial connection
-# style()
-main()
 
-# temp()
-# Water_level()
+POWER_PIN = 7
+SIGNAL_PIN = 5
+
+value = 0  # variable to store the sensor value
+
+
+def loop():
+    print("Turning the sensor ON")
+    time.sleep(1000)  # Simulate power-up delay
+    print("Reading sensor value")
+    value = simulate_sensor_reading()  # Simulate sensor reading
+    print("Sensor value:", value)
+    print("Turning the sensor OFF")
+    time.sleep(1000)  # Simulate power-down delay
+
+def simulate_sensor_reading():
+    # Simulate the analog reading from the sensor
+    return int(time.time() * 1000) % 1024
+
+if __name__ == "_main_":
+    while True:
+        main()
+        loop()
+        time.sleep(1000)  
+
