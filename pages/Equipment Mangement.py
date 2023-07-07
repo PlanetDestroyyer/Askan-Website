@@ -1,70 +1,41 @@
 import streamlit as st
-import base64
-import time
+from gpiozero import MCP3008
+from RPLCD import CharLCD
+from time import sleep
 
-from streamlit_option_menu import option_menu
+adc = MCP3008(channel=0)
+lcd = CharLCD(i2c_expander='PCF8574', address=0x27, port=1, cols=16, rows=2)
 
-st.set_page_config(page_title="Equipment Mangement",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
-st.title("Welcome to the Equip page")
-def style():
-    with open('style.css') as f:
-        st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
+st.title("Water Level Monitoring")
 
-POWER_PIN = 7
-SIGNAL_PIN = 5
+while True:
+    value = adc.value
 
-value = 0  # variable to store the sensor value
+    st.subheader("Analog Value")
+    st.write(f"Value: {value:.2f}")
 
-def simulate_sensor_reading():
-    # Simulate the analog reading from the sensor
-    return int(time.time() * 1000) % 1024
+    st.subheader("Water Level")
+    if value == 0:
+        st.write("Water Level: Empty")
+    elif 0 < value < 0.34:
+        st.write("Water Level: LOW")
+    elif 0.34 <= value < 0.51:
+        st.write("Water Level: Medium")
+    else:
+        st.write("Water Level: HIGH")
 
-def loop():
-    st.write("Turning the sensor ON")
-    time.sleep(1000)  # Simulate power-up delay
-    st.write("Reading sensor value")
-    value = simulate_sensor_reading()  # Simulate sensor reading
-    st.write("Sensor value:", value)
-    st.write("Turning the sensor OFF")
-    time.sleep(1000)  # Simulate power-down delay
+    # Update the LCD
+    lcd.clear()
+    lcd.cursor_pos = (0, 0)
+    lcd.write_string(f"Value: {value:.2f}")
+    lcd.cursor_pos = (1, 0)
+    if value == 0:
+        lcd.write_string("W Level: Empty")
+    elif 0 < value < 0.34:
+        lcd.write_string("W Level: LOW")
+    elif 0.34 <= value < 0.51:
+        lcd.write_string("W Level: Medium")
+    else:
+        lcd.write_string("W Level: HIGH")
 
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as file:
-        encoded_string = base64.b64encode(file.read()).decode("utf-8")
-    return f"data:image/{image_file.split('.')[-1]};base64,{encoded_string}"
-
-def run_app():
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background:url({add_bg_from_local("bg.jpeg")});
-            background-size: cover;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-def hideAll():
-    hide = """
-        <style>
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-        </style>
-        """   
-    st.markdown(hide,unsafe_allow_html=True)
-
-    
-def main():
-    style()
-    run_app()
-    hideAll()
-    
-
-if __name__ == "_main_":
-    main()
-    while True:
-        loop()
-        time.sleep(1000)  
-
+    sleep(1)
