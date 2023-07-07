@@ -11,7 +11,7 @@ def title():
 
 def add_meta_tag():
     meta_tag = """
-        <meta name="description" content="Your meta description goes here">
+        <meta name="description" content="Hydroponics' is the technique of growing plant's using Water-based nutrient solution rather than Soil.We have chosen this project with the aim of infusing new technology into traditional farming; for getting more output from less Hardwork. And every unskilled person can handle this Hydroponic farming with best Gauidence..!">
     """
     st.markdown(meta_tag, unsafe_allow_html=True)
 
