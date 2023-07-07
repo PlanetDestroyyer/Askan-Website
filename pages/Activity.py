@@ -5,7 +5,14 @@ import seaborn as sns
 from datetime import datetime
 import base64
 
-st.set_page_config(page_title="Activity",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)
+st.set_page_config(
+    page_title="Activity",
+    page_icon="logo.jpg",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items=None
+)
+
 # Sample data
 data = {
     'Daily Use of Website': ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04', '2023-01-05'],
@@ -29,7 +36,9 @@ def run_app():
         """,
         unsafe_allow_html=True
     )
+
 run_app()
+
 # Hide unnecessary elements
 st.markdown("""
     <style>
@@ -48,11 +57,11 @@ df['Date of Inspection'] = pd.to_datetime(df['Date of Inspection'])
 
 # Create a graph for daily website usage
 st.subheader('Daily Website Usage')
-plt.figure(figsize=(10, 6))
-sns.lineplot(x=df['Daily Use of Website'], y=df.index, marker='o')
+fig, ax = plt.subplots(figsize=(10, 6))
+sns.lineplot(x=df['Daily Use of Website'], y=df.index, marker='o', ax=ax)
 plt.xlabel('Date')
 plt.ylabel('Days')
-st.pyplot()
+st.pyplot(fig)
 
 # Create a calendar to mark the dates of inspection
 st.subheader('Inspection Dates')

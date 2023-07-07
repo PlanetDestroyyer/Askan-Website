@@ -60,7 +60,7 @@ def main():
     avg_temp_max = st.number_input("Average Temperature - Maximum (°C):", min_value=-1.0, max_value=100.0, value=0.0)
     crop_name = st.text_input("Name of Crop:")
     crop_breed = st.text_input("Breed of Crop:")
-    avg_height = st.number_input("Average Height of Crops (in meters):", min_value=0.0)
+    avg_height = st.number_input("Average Height of Crops (in cm):", min_value=0.0)
     seed_source = st.selectbox("Select Seed Source:", ("Home Made", "Purchased from Provider"))
 
     if st.button("Save"):
