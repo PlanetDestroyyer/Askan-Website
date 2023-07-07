@@ -235,7 +235,7 @@ def get_session_state():
 
 def main():
     main_page()
-    get_session_state()
+    # get_session_state()
     set_logged_in()
     is_logged_in()
     show_profile()
