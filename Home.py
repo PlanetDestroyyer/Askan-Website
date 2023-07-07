@@ -8,7 +8,19 @@ def main():
     st.write("#")
     st.subheader("A GOOD AGRICULTURE FOR BETTER TOMMOROW........!")
 
+def add_meta_tag():
+    meta_tag = """
+        <meta name="description" content="Your meta description goes here">
+    """
+    st.markdown(meta_tag, unsafe_allow_html=True)
+add_meta_tag()
 
+def add_canonical_tag():
+    canonical_tag = """
+        <link rel="canonical" href="https://your-website-url.com/your-page">
+    """
+    st.markdown(canonical_tag, unsafe_allow_html=True)
+add_canonical_tag()
 def hideAll():
     hide = """
         <style>
