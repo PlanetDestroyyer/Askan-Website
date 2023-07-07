@@ -2,8 +2,9 @@ import streamlit as st
 import base64
 
 
-st.set_page_config(page_title="Home",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)    
-def main():
+st.set_page_config(page_title="Home",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)  
+
+def title():
     st.header("ASKAN")
     st.write("#")
     st.subheader("A GOOD AGRICULTURE FOR BETTER TOMMOROW........!")
@@ -13,14 +14,14 @@ def add_meta_tag():
         <meta name="description" content="Your meta description goes here">
     """
     st.markdown(meta_tag, unsafe_allow_html=True)
-add_meta_tag()
+
 
 def add_canonical_tag():
     canonical_tag = """
         <link rel="canonical" href="https://askanhydroponicsproject-p31p.onrender.com">
     """
     st.markdown(canonical_tag, unsafe_allow_html=True)
-add_canonical_tag()
+
 def hideAll():
     hide = """
         <style>
@@ -31,7 +32,7 @@ def hideAll():
         """   
     st.markdown(hide, unsafe_allow_html=True)
 
-def main():
+def main_page():
     st.title("ASKAN")
     st.subheader("A GOOD AGRICULTURE FOR A BETTER TOMORROW")
     st.markdown("---")
@@ -119,7 +120,6 @@ def run_app():
         """,
         unsafe_allow_html=True
     )
-    main()
 
 def style():
     st.markdown(
@@ -206,8 +206,14 @@ def style():
         unsafe_allow_html=True
     )
 
-style()
-hideAll()
-if __name__ == "__main__":
+def main():
+    style()
+    title()
+    add_canonical_tag()
+    add_meta_tag()
+    hideAll()
+    main_page()
     run_app()
+if __name__ == "__main__":
+    main()
 

@@ -23,7 +23,7 @@ def run_app():
     )
 run_app()
 
-def main():
+def main_page():
     st.title("Login , Register or Profile")
     page = st.sidebar.selectbox("Select Page", ("Login", "Registration", "Profile"))
 
@@ -233,7 +233,16 @@ def get_session_state():
         st.session_state['session_state'] = {}
     return st.session_state['session_state']
 
-
-if __name__ == "__main__":
+def main():
+    main_page()
+    get_session_state()
+    set_logged_in()
+    is_logged_in()
+    show_profile()
+    registration()
+    login()
+    main_page()
+    run_app()
     hideAll()
+if __name__ == "__main__":
     main()

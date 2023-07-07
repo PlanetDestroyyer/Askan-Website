@@ -1,6 +1,7 @@
 import streamlit as st
 import base64
 st.set_page_config(page_title="Contact US",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
+
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as file:
         encoded_string = base64.b64encode(file.read()).decode("utf-8")
@@ -18,7 +19,7 @@ def run_app():
         """,
         unsafe_allow_html=True
     )
-run_app()
+
 def hideAll():
     hide = """
         <style>
@@ -28,6 +29,7 @@ def hideAll():
         </style>
         """   
     st.markdown(hide, unsafe_allow_html=True)
+
 def style():
     st.markdown(
         """
@@ -107,24 +109,9 @@ def style():
         """,
         unsafe_allow_html=True
     )
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as file:
-        encoded_string = base64.b64encode(file.read()).decode("utf-8")
-    return f"data:image/{image_file.split('.')[-1]};base64,{encoded_string}"
 
-st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background-image:url({add_bg_from_local("bg.jpeg")});
-        background-size: cover;
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
-style()
+
 def footer():
     st.header("Contact Us")
     st.write("---")
@@ -133,5 +120,12 @@ def footer():
     st.subheader("It is a Project Based Activity. We appreciate your feedback!")
     st.markdown("---")
     st.header("© 2023 All rights reserved by ASKAN Hydroponics Ltd.")
-hideAll()
-footer()
+
+def main():
+    style()
+    run_app()
+    hideAll()
+    footer()
+
+if __name__ == "__main__":
+    main()
