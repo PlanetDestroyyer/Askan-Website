@@ -2,7 +2,7 @@ import streamlit as st
 import base64
 
 
-st.set_page_config(page_title="Home",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)    
+st.set_page_config(page_title="Home",page_icon="logo.jpg",layout="wided",initial_sidebar_state="auto",menu_items=None)    
 def main():
     st.header("ASKAN")
     st.write("#")
@@ -17,7 +17,7 @@ add_meta_tag()
 
 def add_canonical_tag():
     canonical_tag = """
-        <link rel="canonical" href="https://your-website-url.com/your-page">
+        <link rel="canonical" href="https://askanhydroponicsproject-p31p.onrender.com">
     """
     st.markdown(canonical_tag, unsafe_allow_html=True)
 add_canonical_tag()
