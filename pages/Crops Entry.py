@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import sqlite3
-st.set_page_config(page_title="Activity",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)
+st.set_page_config(page_title="Crops Entry",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)
 # Establish a connection to the SQLite database
 conn = sqlite3.connect('crop_data.db')
 

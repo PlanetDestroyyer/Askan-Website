@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Activity",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
+st.set_page_config(page_title="Login , Register or Profile",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
 def main():
     st.title("Login , Register or Profile")
     page = st.sidebar.selectbox("Select Page", ("Login", "Registration", "Profile"))

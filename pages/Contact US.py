@@ -1,6 +1,6 @@
 import streamlit as st
 import base64
-st.set_page_config(page_title="Activity",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
+st.set_page_config(page_title="Contact US",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
 def hideAll():
     hide = """
         <style>

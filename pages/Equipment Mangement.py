@@ -4,7 +4,7 @@ import time
 
 from streamlit_option_menu import option_menu
 
-st.set_page_config(page_title="Activity",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
+st.set_page_config(page_title="Equipment Mangement",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
 st.markdown("""
     """
     ,
