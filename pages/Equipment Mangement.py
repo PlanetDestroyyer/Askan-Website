@@ -2,13 +2,31 @@ import streamlit as st
 import base64
 import time
 
-st.set_page_config(
-    page_title="Equipment Management",
-    page_icon="logo.jpg",
-    layout="centered",
-    initial_sidebar_state="auto",
-    menu_items=None
-)
+from streamlit_option_menu import option_menu
+
+st.set_page_config(page_title="Equipment Mangement",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
+
+def style():
+    with open('style.css') as f:
+        st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
+
+POWER_PIN = 7
+SIGNAL_PIN = 5
+
+value = 0  # variable to store the sensor value
+
+def simulate_sensor_reading():
+    # Simulate the analog reading from the sensor
+    return int(time.time() * 1000) % 1024
+
+def loop():
+    print("Turning the sensor ON")
+    time.sleep(1000)  # Simulate power-up delay
+    print("Reading sensor value")
+    value = simulate_sensor_reading()  # Simulate sensor reading
+    print("Sensor value:", value)
+    print("Turning the sensor OFF")
+    time.sleep(1000)  # Simulate power-down delay
 
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as file:
@@ -27,9 +45,6 @@ def run_app():
         """,
         unsafe_allow_html=True
     )
-
-run_app()
-
 def hideAll():
     hide = """
         <style>
@@ -38,28 +53,18 @@ def hideAll():
         header {visibility: hidden;}
         </style>
         """   
-    st.markdown(hide, unsafe_allow_html=True)
+    st.markdown(hide,unsafe_allow_html=True)
 
-hideAll()
-
+    
 def main():
-    st.title("Welcome to the Equipment page")
+    style()
+    run_app()
+    hideAll()
+    st.title("Welcome to the Equip page")
 
-def loop():
-    st.write("Turning the sensor ON")
-    time.sleep(1)  # Simulate power-up delay
-    st.write("Reading sensor value")
-    value = simulate_sensor_reading()  # Simulate sensor reading
-    st.write("Sensor value:", value)
-    st.write("Turning the sensor OFF")
-    time.sleep(1)  # Simulate power-down delay
-
-def simulate_sensor_reading():
-    # Simulate the analog reading from the sensor
-    return int(time.time() * 1000) % 1024
-
-if __name__ == "__main__":
-    while True:
-        main()
+if __name__ == "_main_":
+    main()
+    while True: 
         loop()
-        time.sleep(1)
+        time.sleep(1000)  
+
