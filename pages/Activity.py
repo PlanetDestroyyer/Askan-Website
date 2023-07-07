@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
+
 st.set_page_config(page_title="Activity",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)
 # Sample data
 data = {
@@ -10,14 +11,6 @@ data = {
     'Date of Inspection': ['2023-01-02', '2023-01-04', '2023-01-06', '2023-01-07', '2023-01-09']
 }
 
-# Set page configuration
-st.set_page_config(
-    page_title="Activity",
-    page_icon="logo.jpg",
-    layout="wide",
-    initial_sidebar_state="auto",
-    menu_items=None
-)
 
 # Hide unnecessary elements
 st.markdown("""
