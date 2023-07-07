@@ -3,4 +3,3 @@ pandas
 seaborn
 streamlit
 streamlit_option_menu
-base64
