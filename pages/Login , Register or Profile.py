@@ -218,7 +218,6 @@ def main():
     show_profile()
     registration()
     login()
-    main_page()
     run_app()
 
 if __name__ == "__main__":
