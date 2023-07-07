@@ -5,7 +5,7 @@ import time
 from streamlit_option_menu import option_menu
 
 st.set_page_config(page_title="Equipment Mangement",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
-
+st.title("Welcome to the Equip page")
 def style():
     with open('style.css') as f:
         st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
@@ -60,6 +60,11 @@ def main():
     style()
     run_app()
     hideAll()
-    st.title("Welcome to the Equip page")
- 
+    
+
+if __name__ == "_main_":
+    main()
+    while True:
+        loop()
+        time.sleep(1000)  
 
