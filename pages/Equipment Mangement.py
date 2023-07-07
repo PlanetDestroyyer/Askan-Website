@@ -20,12 +20,12 @@ def simulate_sensor_reading():
     return int(time.time() * 1000) % 1024
 
 def loop():
-    print("Turning the sensor ON")
+    st.write("Turning the sensor ON")
     time.sleep(1000)  # Simulate power-up delay
-    print("Reading sensor value")
+    st.write("Reading sensor value")
     value = simulate_sensor_reading()  # Simulate sensor reading
-    print("Sensor value:", value)
-    print("Turning the sensor OFF")
+    st.write("Sensor value:", value)
+    st.write("Turning the sensor OFF")
     time.sleep(1000)  # Simulate power-down delay
 
 def add_bg_from_local(image_file):
@@ -61,10 +61,5 @@ def main():
     run_app()
     hideAll()
     st.title("Welcome to the Equip page")
-
-if __name__ == "_main_":
-    main()
-    while True: 
-        loop()
-        time.sleep(1000)  
+ 
 
