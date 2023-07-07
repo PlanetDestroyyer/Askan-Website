@@ -1,7 +1,28 @@
 import streamlit as st
 import pandas as pd
+import base64
 
 st.set_page_config(page_title="Login , Register or Profile",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
+
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as file:
+        encoded_string = base64.b64encode(file.read()).decode("utf-8")
+    return f"data:image/{image_file.split('.')[-1]};base64,{encoded_string}"
+
+def run_app():
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background:url({add_bg_from_local("bg.jpeg")});
+            background-size: cover;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+run_app()
+
 def main():
     st.title("Login , Register or Profile")
     page = st.sidebar.selectbox("Select Page", ("Login", "Registration", "Profile"))
@@ -72,13 +93,6 @@ def show_profile():
 
 def is_logged_in():
     df = pd.read_csv('new1.csv')
-    number = df['Numbers'].tolist()
-    names = df['Names'].tolist()
-    if name in names:
-        index = names.index(name)
-        number = number[index]
-        number = int(number)
-        whatappp(number)
     session_state = get_session_state()
     return session_state.get('username') is not None
 
@@ -104,8 +118,7 @@ def hideAll():
 
 # Main function
 def main():
-    set_page_style()
-    hide_elements()
+
     st.title("Login, Register, or Profile")
     page = st.sidebar.selectbox("Select Page", ("Login", "Registration", "Profile"))
 

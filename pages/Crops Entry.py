@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import base64
 import sqlite3
 st.set_page_config(page_title="Crops Entry",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)
 # Establish a connection to the SQLite database
@@ -20,7 +21,24 @@ conn.execute('''
         seed_source TEXT
     )
 ''')
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as file:
+        encoded_string = base64.b64encode(file.read()).decode("utf-8")
+    return f"data:image/{image_file.split('.')[-1]};base64,{encoded_string}"
 
+def run_app():
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background:url({add_bg_from_local("bg.jpeg")});
+            background-size: cover;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+run_app()
 def insert_crop_details(username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source):
     conn.execute('''
         INSERT INTO crops (username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source)

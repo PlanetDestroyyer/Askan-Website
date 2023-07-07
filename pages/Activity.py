@@ -11,7 +11,24 @@ data = {
     'Date of Inspection': ['2023-01-02', '2023-01-04', '2023-01-06', '2023-01-07', '2023-01-09']
 }
 
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as file:
+        encoded_string = base64.b64encode(file.read()).decode("utf-8")
+    return f"data:image/{image_file.split('.')[-1]};base64,{encoded_string}"
 
+def run_app():
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background:url({add_bg_from_local("bg.jpeg")});
+            background-size: cover;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+run_app()
 # Hide unnecessary elements
 st.markdown("""
     <style>

@@ -5,12 +5,24 @@ import time
 from streamlit_option_menu import option_menu
 
 st.set_page_config(page_title="Equipment Mangement",page_icon="logo.jpg",layout="centered",initial_sidebar_state="auto",menu_items=None)
-st.markdown("""
-    """
-    ,
-    unsafe_allow_html=True)
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as file:
+        encoded_string = base64.b64encode(file.read()).decode("utf-8")
+    return f"data:image/{image_file.split('.')[-1]};base64,{encoded_string}"
 
-
+def run_app():
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background:url({add_bg_from_local("bg.jpeg")});
+            background-size: cover;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+run_app()
 def hideAll():
     hide = """
         <style>
