@@ -23,6 +23,22 @@ def run_app():
     )
 run_app()
 
+# Function to check if the user is logged in
+def is_logged_in():
+    session_state = get_session_state()
+    return session_state.get('username') is not None
+
+# Function to store the logged-in user
+def set_logged_in(username):
+    session_state = get_session_state()
+    session_state['username'] = username
+
+# Function to get the session state
+def get_session_state():
+    if 'session_state' not in st.session_state:
+        st.session_state['session_state'] = {}
+    return st.session_state['session_state']
+
 def main_page():
     st.title("Login , Register or Profile")
     page = st.sidebar.selectbox("Select Page", ("Login", "Registration", "Profile"))
@@ -82,28 +98,6 @@ def registeration():
 
     except:
         st.write("Log in first to get to the Profile")
-
-
-def show_profile():
-    session_state = get_session_state()
-    username = session_state['username']
-    st.text(f"Profile: {username}")
-
-
-
-def is_logged_in():
-    df = pd.read_csv('new1.csv')
-    session_state = get_session_state()
-    return session_state.get('username') is not None
-
-def set_logged_in(username):
-    session_state = get_session_state()
-    session_state['username'] = username
-
-def get_session_state():
-    if 'session_state' not in st.session_state:
-        st.session_state['session_state'] = {}
-    return st.session_state['session_state']
 
 def hideAll():
 
@@ -217,32 +211,15 @@ def show_profile():
     else:
         st.subheader(f"No profile data found for user: {username}")
 
-# Function to check if the user is logged in
-def is_logged_in():
-    session_state = get_session_state()
-    return session_state.get('username') is not None
-
-# Function to store the logged-in user
-def set_logged_in(username):
-    session_state = get_session_state()
-    session_state['username'] = username
-
-# Function to get the session state
-def get_session_state():
-    if 'session_state' not in st.session_state:
-        st.session_state['session_state'] = {}
-    return st.session_state['session_state']
 
 def main():
+    hideAll()
     main_page()
-    # get_session_state()
-    # set_logged_in()
-    # is_logged_in()
     show_profile()
     registration()
     login()
     main_page()
     run_app()
-    hideAll()
+
 if __name__ == "__main__":
     main()
