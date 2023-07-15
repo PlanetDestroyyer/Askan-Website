@@ -2,7 +2,15 @@ import streamlit as st
 import pandas as pd
 import base64
 import sqlite3
-st.set_page_config(page_title="Crops Entry",page_icon="logo.jpg",layout="wide",initial_sidebar_state="auto",menu_items=None)
+
+st.set_page_config(
+    page_title="Crops Entry",
+    page_icon="logo.jpg",
+    layout="wide",
+    initial_sidebar_state="auto",
+    menu_items=None
+)
+
 # Establish a connection to the SQLite database
 conn = sqlite3.connect('crop_data.db')
 
@@ -21,6 +29,7 @@ conn.execute('''
         seed_source TEXT
     )
 ''')
+
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as file:
         encoded_string = base64.b64encode(file.read()).decode("utf-8")
@@ -38,7 +47,7 @@ def run_app():
         """,
         unsafe_allow_html=True
     )
-run_app()
+
 def insert_crop_details(username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source):
     conn.execute('''
         INSERT INTO crops (username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source)
@@ -49,11 +58,7 @@ def insert_crop_details(username, region, area_working, avg_temp_min, avg_temp_m
 def main():
     st.title("Crop Entry.py")
     st.subheader("Crop Details")
-    
-    # Retrieve the username from the session state
-    session_state = get_session_state()
-    username = session_state['username']
-    
+
     region = st.text_input("Enter your region (For India Only):")
     area_working = st.number_input("Area of working (in square meters):", min_value=0.0)
     avg_temp_min = st.number_input("Average Temperature - Minimum (°C):", min_value=-1.0, max_value=100.0, value=0.0)
@@ -64,8 +69,15 @@ def main():
     seed_source = st.selectbox("Select Seed Source:", ("Home Made", "Purchased from Provider"))
 
     if st.button("Save"):
-        insert_crop_details(username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source)
-        st.success("Crop details saved successfully!")
+        # Retrieve the username from the session state
+        session_state = get_session_state()
+        username = session_state.get('username')
+
+        if username:
+            insert_crop_details(username, region, area_working, avg_temp_min, avg_temp_max, crop_name, crop_breed, avg_height, seed_source)
+            st.success("Crop details saved successfully!")
+        else:
+            st.error("Username not found in session state. Please provide a username.")
 
 def hideAll():
     hide = """
@@ -74,7 +86,7 @@ def hideAll():
         footer {visibility: hidden;}
         header {visibility: hidden;}
         </style>
-        """   
+        """
     st.markdown(hide, unsafe_allow_html=True)
 
 def get_session_state():
@@ -84,4 +96,6 @@ def get_session_state():
 
 if __name__ == "__main__":
     hideAll()
+    run_app()
     main()
+

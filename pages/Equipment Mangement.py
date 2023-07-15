@@ -1,41 +1,35 @@
-import streamlit as st
-from gpiozero import MCP3008
-from RPLCD import CharLCD
-from time import sleep
+import serial
+import time
 
-adc = MCP3008(channel=0)
-lcd = CharLCD(i2c_expander='PCF8574', address=0x27, port=1, cols=16, rows=2)
+# Initialize serial communication
+ser = serial.Serial('COM4', 9600)  # Replace 'COM4' with your Arduino's serial port
 
-st.title("Water Level Monitoring")
+# Thresholds
+lowerThreshold = 310
+upperThreshold = 510
 
+# Function to print water level message
+def print_water_level_message(level):
+    if level <= lowerThreshold:
+        print("Water Level: need more water")
+    elif lowerThreshold < level <= upperThreshold:
+        print("Water Level: need water")
+    else:
+        print("Water Level: full")
+
+# Loop
 while True:
-    value = adc.value
+    # Read water level from the Arduino
+    line = ser.readline().decode().rstrip()
 
-    st.subheader("Analog Value")
-    st.write(f"Value: {value:.2f}")
-
-    st.subheader("Water Level")
-    if value == 0:
-        st.write("Water Level: Empty")
-    elif 0 < value < 0.34:
-        st.write("Water Level: LOW")
-    elif 0.34 <= value < 0.51:
-        st.write("Water Level: Medium")
+    if line:
+        try:
+            waterLevel = int(line)  # Parse the received line as an integer
+            print_water_level_message(waterLevel)
+        except ValueError:
+            print(line)  # Print any non-integer lines received from the Arduino
     else:
-        st.write("Water Level: HIGH")
+        print("The sensors are not connected or reload the website")
 
-    # Update the LCD
-    lcd.clear()
-    lcd.cursor_pos = (0, 0)
-    lcd.write_string(f"Value: {value:.2f}")
-    lcd.cursor_pos = (1, 0)
-    if value == 0:
-        lcd.write_string("W Level: Empty")
-    elif 0 < value < 0.34:
-        lcd.write_string("W Level: LOW")
-    elif 0.34 <= value < 0.51:
-        lcd.write_string("W Level: Medium")
-    else:
-        lcd.write_string("W Level: HIGH")
+    time.sleep(1)
 
-    sleep(1)
